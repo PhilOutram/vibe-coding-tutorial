@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitHub Setup — Vibe Code Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<aside>
+  <div class="logo">
+    <span class="logo-tag">Developer Guide</span>
+    <h1>Vibe<span>Code</span></h1>
+  </div>
+  <nav>
+    <div class="nav-section-label">Getting Started</div>
+    <a href="index.html">
+      <span class="icon">🏠</span> Home
+    </a>
+    <a href="github-setup.html" class="active">
+      <span class="icon">🐙</span> GitHub Setup
+    </a>
+    <a href="new-project.html">
+      <span class="icon">⚡</span> Starting a New Project
+    </a>
+    <div class="nav-section-label">Reference</div>
+    <a href="useful-links.html">
+      <span class="icon">🔗</span> Useful Links
+    </a>
+    <!-- Add new guide links here -->
+  </nav>
+  <div class="sidebar-footer">
+    Add new guide pages and<br>link them in the nav above.
+  </div>
+</aside>
+
+<main>
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Getting Started</span>
+      <span>›</span>
+      <span>GitHub Setup</span>
+    </div>
+    <h2>GitHub Setup</h2>
+    <p>
+      Do this once. You'll create a GitHub account, then set up a simple hub page
+      at your own web address — a home base that will link to all the projects you
+      build from here on.
+    </p>
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-seg" id="p1"></div>
+    <div class="progress-seg" id="p2"></div>
+    <div class="progress-seg" id="p3"></div>
+    <div class="progress-seg" id="p4"></div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Sign Up for GitHub <span>~3 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Go to <a href="https://github.com" target="_blank" rel="noopener" class="ext-link">github.com</a>
+          — GitHub is a free website where you store and publish your web apps
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">Click <span class="ui-label">Sign up</span> in the top right corner</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">Enter your email address and click <span class="ui-label">Continue</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          Choose a password and a username — your username becomes part of your web address,
+          so pick something you're happy to share publicly.
+          <strong>Make a note of it</strong>, you'll need it in Step 2
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div class="step-body">Complete the short visual puzzle to confirm you're not a robot</div>
+      </div>
+      <div class="step">
+        <div class="step-n">06</div>
+        <div class="step-body">Click <span class="ui-label">Create account</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">07</div>
+        <div class="step-body">Check your email — GitHub will send a confirmation link. Click it to activate your account</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Create Your Hub Repository <span>~2 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Once logged in, click the <span class="ui-label">+</span> icon in the top right corner
+          and select <span class="ui-label">New repository</span>
+          — a repository (or "repo") is a project folder on GitHub where your files live
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          Name it <code>yourusername.github.io</code> — swap <code>yourusername</code> for your actual GitHub username
+          <div class="tip">
+            <span class="tip-icon">⚠️</span>
+            The name must match your username exactly, including upper and lower case.
+            This special name is what tells GitHub to turn this folder into your personal website.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">Set visibility to <span class="ui-label">Public</span> — this means anyone can visit your site, which is what we want</div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">Tick <span class="ui-label">✓ Add a README file</span> — this just creates a starter file so the folder isn't empty</div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div class="step-body">Click <span class="ui-label">Create repository</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Add a Simple Hub Page <span>~5 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Rather than filling this repository with a specific project, you'll put a simple
+          hub page here — just your name and links to projects as you build them.
+          Ask Claude to create one for you: <em>"Create a minimal index.html homepage for a developer hub.
+          Include my name, a short bio, and a placeholder list of projects."</em>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">Save the file Claude gives you as <code>index.html</code> on your computer</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">In your repository on GitHub, click <span class="ui-label">Add file</span> → <span class="ui-label">Upload files</span>, then drag in your <code>index.html</code></div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">Click <span class="ui-label">Commit changes</span> — "committing" just means saving the file to GitHub</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Switch on Your Live Site <span>~5 min to go live</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">Click the <span class="ui-label">Settings</span> tab near the top of your repository page</div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">In the left-hand menu, scroll down and click <span class="ui-label">Pages</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Under <span class="ui-label">Source</span>, select <span class="ui-label">Deploy from a branch</span>,
+          set the branch to <span class="ui-label">main</span> and the folder to <span class="ui-label">/ (root)</span>,
+          then click <span class="ui-label">Save</span>
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            "Branch" and "root" are technical terms — all they mean here is: use the main folder of your project, exactly as it is.
+            If you already see a web address on this page, you're already set up.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          Your hub will be live at <code>https://yourusername.github.io</code> within a few minutes.
+          Try refreshing if it doesn't load straight away
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="success-banner">
+    <div class="success-icon">🎉</div>
+    <div class="success-text">
+      <h3>Your hub is live!</h3>
+      <p>
+        You now have a permanent home on the web at <code>https://yourusername.github.io</code>.
+        Every project you build from here on gets its own separate repository and its own URL —
+        you'll just add a link to this hub page each time.
+        Head to <a href="new-project.html" style="color:#34d399;">Starting a New Project</a> when you're ready to build your first app.
+      </p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  const segs = ['p1','p2','p3','p4'].map(id => document.getElementById(id));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = Array.from(sections).indexOf(e.target);
+        if (idx >= 0) segs[idx].classList.add('done');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>

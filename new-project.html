@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Starting a New Project — Vibe Code Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<aside>
+  <div class="logo">
+    <span class="logo-tag">Developer Guide</span>
+    <h1>Vibe<span>Code</span></h1>
+  </div>
+  <nav>
+    <div class="nav-section-label">Getting Started</div>
+    <a href="index.html">
+      <span class="icon">🏠</span> Home
+    </a>
+    <a href="github-setup.html">
+      <span class="icon">🐙</span> GitHub Setup
+    </a>
+    <a href="new-project.html" class="active">
+      <span class="icon">⚡</span> Starting a New Project
+    </a>
+    <div class="nav-section-label">Reference</div>
+    <a href="useful-links.html">
+      <span class="icon">🔗</span> Useful Links
+    </a>
+    <!-- Add new guide links here -->
+  </nav>
+  <div class="sidebar-footer">
+    Add new guide pages and<br>link them in the nav above.
+  </div>
+</aside>
+
+<main>
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Getting Started</span>
+      <span>›</span>
+      <span>Starting a New Project</span>
+    </div>
+    <h2>Starting a New Project</h2>
+    <p>
+      Do this each time you build a new web app. Every project lives in its own
+      separate folder on GitHub and gets its own public web address —
+      completely independent from your hub and from other projects.
+    </p>
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-seg" id="p1"></div>
+    <div class="progress-seg" id="p2"></div>
+    <div class="progress-seg" id="p3"></div>
+    <div class="progress-seg" id="p4"></div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Create a New Repository for Your Project <span>~2 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Log in at <a href="https://github.com" target="_blank" rel="noopener" class="ext-link">github.com</a>,
+          click the <span class="ui-label">+</span> icon in the top right, and select <span class="ui-label">New repository</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          Give it a short, descriptive name with no spaces — for example <code>weather-app</code> or <code>quiz-game</code>.
+          This name will appear in your project's web address
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">Set visibility to <span class="ui-label">Public</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">Tick <span class="ui-label">✓ Add a README file</span>, then click <span class="ui-label">Create repository</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Build Your App with Claude <span>varies</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Open <a href="https://claude.ai" target="_blank" rel="noopener" class="ext-link">claude.ai</a>
+          and describe what you want to build. Be specific — the more detail you give, the better the result.
+          For example: <em>"Build a single-page web app that lets me track my daily water intake.
+          It should look clean and modern, work on mobile, and save my progress during the session."</em>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          Claude will produce your app as a single file called <code>index.html</code>
+          — this one file contains everything (the layout, the styling, and the logic).
+          You can ask Claude to make changes by describing what you want different
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          When you're happy with it, copy the code and save it as <code>index.html</code> on your computer
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            Keep the filename as <code>index.html</code> — GitHub will serve this file automatically
+            as the first page people see when they visit your project's web address.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Upload Your App and Switch on Pages <span>~3 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">Go to your new repository on GitHub, click <span class="ui-label">Add file</span> → <span class="ui-label">Upload files</span>, and drag in your <code>index.html</code></div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">Click <span class="ui-label">Commit changes</span> to save the file</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">Click the <span class="ui-label">Settings</span> tab, then <span class="ui-label">Pages</span> in the left-hand menu</div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          Under <span class="ui-label">Source</span>, select <span class="ui-label">Deploy from a branch</span>,
+          set the branch to <span class="ui-label">main</span> and folder to <span class="ui-label">/ (root)</span>,
+          then click <span class="ui-label">Save</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div class="step-body">
+          Wait a couple of minutes, then your app will be live at
+          <code>https://yourusername.github.io/your-repo-name</code>
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            The URL follows a simple pattern: your hub address, then a slash, then the repository name you chose in Step 1.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Add Your Project to Your Hub Page <span>~5 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Go to your hub repository — the one named <code>yourusername.github.io</code>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          Click on your <code>index.html</code> file, then click the pencil ✏️ icon to edit it.
+          Or download it, make changes, and re-upload
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Add a link to your new project. You can ask Claude to help:
+          <em>"Add a link to my new project called [name] at [URL] in this hub page"</em>
+          — then paste in your current hub page code
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">Save the updated file and commit the changes — your hub will update within a minute or two</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="success-banner">
+    <div class="success-icon">🚀</div>
+    <div class="success-text">
+      <h3>Project live!</h3>
+      <p>
+        Your app is now public at <code>https://yourusername.github.io/your-repo-name</code>
+        and linked from your hub. Whenever you want to update the app, upload a new version of
+        <code>index.html</code> to the same repository and commit — the live site will update automatically within minutes.
+      </p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  const segs = ['p1','p2','p3','p4'].map(id => document.getElementById(id));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = Array.from(sections).indexOf(e.target);
+        if (idx >= 0) segs[idx].classList.add('done');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
