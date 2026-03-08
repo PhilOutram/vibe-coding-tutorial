@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Useful Links — Vibe Code Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --sidebar-bg: #12151c;
+      --accent: #00e5ff;
+      --accent2: #ff4d6d;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --border: #1e2330;
+      --card: #161922;
+      --sidebar-w: 240px;
+      --font-mono: 'Space Mono', monospace;
+      --font-head: 'Syne', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-tag {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .logo h1 {
+      font-family: var(--font-head);
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .logo h1 span { color: var(--accent); }
+
+    nav { flex: 1; padding: 16px 0; overflow-y: auto; }
+
+    .nav-section-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 20px 6px;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 12px;
+      color: var(--muted);
+      transition: color 0.2s, background 0.2s;
+      border-left: 3px solid transparent;
+      line-height: 1.4;
+    }
+
+    nav a .icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    nav a:hover { color: var(--text); background: rgba(0,229,255,0.04); }
+    nav a:hover .icon { background: rgba(0,229,255,0.12); }
+
+    nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(0,229,255,0.07);
+    }
+
+    nav a.active .icon { background: rgba(0,229,255,0.18); }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── MAIN ── */
+    main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 48px 52px;
+      max-width: calc(var(--sidebar-w) + 800px);
+    }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .page-header h2 {
+      font-family: var(--font-head);
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+
+    /* Link category */
+    .link-category {
+      margin-bottom: 44px;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .link-category:nth-child(1) { animation-delay: 0.05s; }
+    .link-category:nth-child(2) { animation-delay: 0.12s; }
+    .link-category:nth-child(3) { animation-delay: 0.19s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .category-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Link cards grid */
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .link-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      text-decoration: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::after {
+      content: '↗';
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 14px;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      transform: translate(-4px, 4px);
+    }
+
+    .link-card:hover {
+      border-color: var(--accent);
+      background: rgba(0,229,255,0.03);
+      transform: translateY(-2px);
+    }
+
+    .link-card:hover::after {
+      opacity: 1;
+      transform: translate(0, 0);
+      color: var(--accent);
+    }
+
+    .link-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .link-info { flex: 1; min-width: 0; }
+
+    .link-name {
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .link-url {
+      font-size: 10px;
+      color: var(--accent);
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+
+    /* scan-line */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<aside>
+  <div class="logo">
+    <span class="logo-tag">Developer Guide</span>
+    <h1>Vibe<span>Code</span></h1>
+  </div>
+
+  <nav>
+    <div class="nav-section-label">Getting Started</div>
+    <a href="index.html">
+      <span class="icon">🏠</span> Home
+    </a>
+    <a href="github-pages.html">
+      <span class="icon">🐙</span> GitHub &amp; Pages Setup
+    </a>
+
+    <div class="nav-section-label">Reference</div>
+    <a href="useful-links.html" class="active">
+      <span class="icon">🔗</span> Useful Links
+    </a>
+
+    <!-- Add new guide links here -->
+  </nav>
+
+  <div class="sidebar-footer">
+    Add new guide pages and<br>link them in the nav above.
+  </div>
+</aside>
+
+<main>
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Reference</span>
+      <span>›</span>
+      <span>Useful Links</span>
+    </div>
+    <h2>Useful Links</h2>
+    <p>Everything you'll need, in one place. Click any card to open the site in a new tab.</p>
+  </div>
+
+  <!-- Category: Build & Host -->
+  <div class="link-category">
+    <div class="category-label">Build &amp; Host Your App</div>
+    <div class="link-grid">
+
+      <a href="https://github.com" target="_blank" rel="noopener" class="link-card">
+        <div class="link-logo">🐙</div>
+        <div class="link-info">
+          <div class="link-name">GitHub</div>
+          <div class="link-desc">Store your project files and publish your app to the web for free</div>
+          <div class="link-url">github.com</div>
+        </div>
+      </a>
+
+      <!-- Add more links in this category as needed, e.g.:
+      <a href="https://pages.github.com" target="_blank" rel="noopener" class="link-card">
+        <div class="link-logo">📄</div>
+        <div class="link-info">
+          <div class="link-name">GitHub Pages Docs</div>
+          <div class="link-desc">Official guide to hosting websites on GitHub Pages</div>
+          <div class="link-url">pages.github.com</div>
+        </div>
+      </a>
+      -->
+
+    </div>
+  </div>
+
+  <!-- Category: AI Tools -->
+  <div class="link-category">
+    <div class="category-label">AI Tools</div>
+    <div class="link-grid">
+
+      <!-- Add AI tool links here, e.g.:
+      <a href="https://claude.ai" target="_blank" rel="noopener" class="link-card">
+        <div class="link-logo">🤖</div>
+        <div class="link-info">
+          <div class="link-name">Claude</div>
+          <div class="link-desc">The AI assistant you'll use to help build your web app</div>
+          <div class="link-url">claude.ai</div>
+        </div>
+      </a>
+      -->
+
+      <div class="link-card" style="opacity:0.35; pointer-events:none; cursor:default;">
+        <div class="link-logo">➕</div>
+        <div class="link-info">
+          <div class="link-name">Add a link</div>
+          <div class="link-desc">Copy a link-card block from the HTML comments above and fill in the details</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Category: Learning -->
+  <div class="link-category">
+    <div class="category-label">Learning &amp; Reference</div>
+    <div class="link-grid">
+
+      <!-- Add reference links here -->
+
+      <div class="link-card" style="opacity:0.35; pointer-events:none; cursor:default;">
+        <div class="link-logo">➕</div>
+        <div class="link-info">
+          <div class="link-name">Add a link</div>
+          <div class="link-desc">Copy a link-card block from the HTML comments above and fill in the details</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>

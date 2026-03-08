@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitHub &amp; Pages Setup — Vibe Code Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --sidebar-bg: #12151c;
+      --accent: #00e5ff;
+      --accent2: #ff4d6d;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --border: #1e2330;
+      --card: #161922;
+      --sidebar-w: 240px;
+      --font-mono: 'Space Mono', monospace;
+      --font-head: 'Syne', sans-serif;
+      --step-1: #00e5ff;
+      --step-2: #a78bfa;
+      --step-3: #34d399;
+      --step-4: #fb923c;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-tag {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .logo h1 {
+      font-family: var(--font-head);
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .logo h1 span { color: var(--accent); }
+
+    nav { flex: 1; padding: 16px 0; overflow-y: auto; }
+
+    .nav-section-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 20px 6px;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 12px;
+      color: var(--muted);
+      transition: color 0.2s, background 0.2s;
+      border-left: 3px solid transparent;
+      line-height: 1.4;
+    }
+
+    nav a .icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    nav a:hover { color: var(--text); background: rgba(0,229,255,0.04); }
+    nav a:hover .icon { background: rgba(0,229,255,0.12); }
+
+    nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(0,229,255,0.07);
+    }
+
+    nav a.active .icon { background: rgba(0,229,255,0.18); }
+
+    .ext-link {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,229,255,0.35);
+      transition: border-color 0.2s;
+    }
+    .ext-link:hover { border-color: var(--accent); }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── MAIN ── */
+    main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 48px 52px;
+      max-width: calc(var(--sidebar-w) + 800px);
+    }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .page-header h2 {
+      font-family: var(--font-head);
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+
+    /* Progress bar */
+    .progress-track {
+      display: flex;
+      gap: 0;
+      margin-bottom: 48px;
+    }
+
+    .progress-seg {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-right: 4px;
+      transition: background 0.3s;
+    }
+
+    .progress-seg.done { background: var(--accent); }
+
+    /* Section blocks */
+    .section {
+      margin-bottom: 40px;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section:nth-child(1) { animation-delay: 0.05s; }
+    .section:nth-child(2) { animation-delay: 0.12s; }
+    .section:nth-child(3) { animation-delay: 0.19s; }
+    .section:nth-child(4) { animation-delay: 0.26s; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .section-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .s1 .section-num { background: rgba(0,229,255,0.15); color: var(--step-1); }
+    .s2 .section-num { background: rgba(167,139,250,0.15); color: var(--step-2); }
+    .s3 .section-num { background: rgba(52,211,153,0.15); color: var(--step-3); }
+    .s4 .section-num { background: rgba(251,146,60,0.15); color: var(--step-4); }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .section-title span { font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 8px; font-family: var(--font-mono); }
+
+    /* Steps */
+    .steps {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      align-items: start;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .step:last-child { border-bottom: none; }
+    .step:hover { background: rgba(255,255,255,0.02); }
+
+    .step-n {
+      padding: 18px 0 18px 18px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      padding-top: 20px;
+    }
+
+    .step-body {
+      padding: 18px 20px 18px 4px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .step-body code {
+      background: rgba(0,229,255,0.1);
+      color: var(--accent);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+    }
+
+    .step-body .ui-label {
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      white-space: nowrap;
+    }
+
+    /* Tip box */
+    .tip {
+      margin-top: 12px;
+      background: rgba(251,146,60,0.08);
+      border: 1px solid rgba(251,146,60,0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: #fdba74;
+      line-height: 1.6;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .tip-icon { flex-shrink: 0; margin-top: 1px; }
+
+    /* Success banner */
+    .success-banner {
+      margin-top: 48px;
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.3);
+      border-radius: 12px;
+      padding: 28px 32px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      animation: fadeUp 0.4s 0.35s ease both;
+    }
+
+    .success-icon { font-size: 28px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+
+    .success-text h3 {
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 700;
+      color: #34d399;
+      margin-bottom: 8px;
+    }
+
+    .success-text p {
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .success-text code {
+      background: rgba(52,211,153,0.12);
+      color: #34d399;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+    }
+
+    /* scan-line */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<aside>
+  <div class="logo">
+    <span class="logo-tag">Developer Guide</span>
+    <h1>Vibe<span>Code</span></h1>
+  </div>
+
+  <nav>
+    <div class="nav-section-label">Getting Started</div>
+    <a href="index.html">
+      <span class="icon">🏠</span> Home
+    </a>
+    <a href="github-pages.html" class="active">
+      <span class="icon">🐙</span> GitHub &amp; Pages Setup
+    </a>
+
+    <div class="nav-section-label">Reference</div>
+    <a href="useful-links.html">
+      <span class="icon">🔗</span> Useful Links
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    Add new guide pages and<br>link them in the nav above.
+  </div>
+</aside>
+
+<main>
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Getting Started</span>
+      <span>›</span>
+      <span>GitHub &amp; Pages Setup</span>
+    </div>
+    <h2>GitHub &amp; Pages Setup</h2>
+    <p>Get your web app live on the internet in four steps — no experience needed. By the end you'll have a real public web address you can share with anyone.</p>
+  </div>
+
+  <!-- Progress indicator -->
+  <div class="progress-track" id="progress">
+    <div class="progress-seg" id="p1"></div>
+    <div class="progress-seg" id="p2"></div>
+    <div class="progress-seg" id="p3"></div>
+    <div class="progress-seg" id="p4"></div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Sign Up for GitHub <span>~3 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">Go to <a href="https://github.com" target="_blank" rel="noopener" class="ext-link">github.com</a> — GitHub is a free website where you can store and publish your web app</div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">Click <span class="ui-label">Sign up</span> in the top right corner</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">Enter your email address and click <span class="ui-label">Continue</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">Choose a password and a username (your public display name on GitHub) — <strong>make a note of your username</strong>, you'll need it in Step 2</div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div class="step-body">Complete the short visual puzzle to confirm you're not a robot</div>
+      </div>
+      <div class="step">
+        <div class="step-n">06</div>
+        <div class="step-body">Click <span class="ui-label">Create account</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">07</div>
+        <div class="step-body">Check your email — GitHub will send you a message with a confirmation link. Click it to activate your account</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Create Your Project Folder on GitHub <span>~2 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">Once logged in, click the <span class="ui-label">+</span> icon in the top right corner</div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">Select <span class="ui-label">New repository</span> — a repository (or "repo") is simply a project folder on GitHub where your files live</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Name it <code>yourusername.github.io</code> — swap <code>yourusername</code> for your actual GitHub username
+          <div class="tip"><span class="tip-icon">⚠️</span> The name must match your username exactly, including upper and lower case letters. This special name is what tells GitHub to turn your folder into a website.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">Make sure the repository is set to <span class="ui-label">Public</span> — this means anyone can visit your site (which is what we want)</div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div class="step-body">Tick the box <span class="ui-label">✓ Add a README file</span> — this just creates a starter file so the folder isn't empty</div>
+      </div>
+      <div class="step">
+        <div class="step-n">06</div>
+        <div class="step-body">Click <span class="ui-label">Create repository</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Upload Your Web App Files <span>~2 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">Inside your new repository, click <span class="ui-label">Add file</span> → <span class="ui-label">Upload files</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">Drag your web app files into the upload area, or click to browse for them. This includes your HTML, CSS, and JavaScript files — the building blocks of your web app</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Make sure your main page file is named <code>index.html</code>
+          <div class="tip"><span class="tip-icon">💡</span> GitHub serves <code>index.html</code> as the homepage automatically — think of it as the front door to your site. Any other filename won't show up when someone visits your web address.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">Click <span class="ui-label">Commit changes</span> — "committing" just means saving your files to GitHub</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Switch on Your Live Site <span>~5 min to go live</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">Click the <span class="ui-label">Settings</span> tab near the top of your repository page</div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">In the left-hand menu, scroll down and click <span class="ui-label">Pages</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Under <span class="ui-label">Source</span>, select <span class="ui-label">Deploy from a branch</span>, then set the branch to <span class="ui-label">main</span> and the folder to <span class="ui-label">/ (root)</span> — then click <span class="ui-label">Save</span>
+          <div class="tip"><span class="tip-icon">💡</span> "Branch" and "root" are technical terms — all they mean here is: use the main folder of your project, exactly as it is. If you already see a web address shown on this page, you're already set up.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          Your site will appear at <code>https://yourusername.github.io</code> — it can take a few minutes to go live the first time. Try refreshing the page if it doesn't load straight away
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success banner -->
+  <div class="success-banner">
+    <div class="success-icon">🎉</div>
+    <div class="success-text">
+      <h3>You're live!</h3>
+      <p>
+        Your web app is now publicly accessible at <code>https://yourusername.github.io</code> — share it with anyone.
+        Whenever you upload new or updated files and click <em>Commit changes</em>, GitHub will automatically update your live site within a couple of minutes.
+      </p>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Light progress indicator — marks segments done as user scrolls
+  const sections = document.querySelectorAll('.section');
+  const segs = [
+    document.getElementById('p1'),
+    document.getElementById('p2'),
+    document.getElementById('p3'),
+    document.getElementById('p4'),
+  ];
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = Array.from(sections).indexOf(e.target);
+        if (idx >= 0) segs[idx].classList.add('done');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>

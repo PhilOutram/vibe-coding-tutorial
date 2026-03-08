@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibe Code Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --sidebar-bg: #12151c;
+      --accent: #00e5ff;
+      --accent2: #ff4d6d;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --border: #1e2330;
+      --card: #161922;
+      --sidebar-w: 240px;
+      --font-mono: 'Space Mono', monospace;
+      --font-head: 'Syne', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-tag {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .logo h1 {
+      font-family: var(--font-head);
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .logo h1 span { color: var(--accent); }
+
+    nav { flex: 1; padding: 16px 0; overflow-y: auto; }
+
+    .nav-section-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 20px 6px;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 12px;
+      color: var(--muted);
+      transition: color 0.2s, background 0.2s;
+      border-left: 3px solid transparent;
+      line-height: 1.4;
+    }
+
+    nav a .icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    nav a:hover { color: var(--text); background: rgba(0,229,255,0.04); }
+    nav a:hover .icon { background: rgba(0,229,255,0.12); }
+
+    nav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(0,229,255,0.07);
+    }
+
+    nav a.active .icon {
+      background: rgba(0,229,255,0.18);
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── MAIN ── */
+    main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      min-height: 100vh;
+    }
+
+    .home-content {
+      max-width: 560px;
+      text-align: center;
+    }
+
+    .home-content .eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .home-content h2 {
+      font-family: var(--font-head);
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .home-content h2 em {
+      font-style: normal;
+      color: var(--accent2);
+    }
+
+    .home-content p {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card .card-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .card h3 {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .card p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .start-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-bottom: 36px;
+      letter-spacing: 1px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .start-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* scan-line aesthetic detail */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @media (max-width: 640px) {
+      aside { width: 100%; min-height: auto; position: relative; flex-direction: row; flex-wrap: wrap; }
+      main { margin-left: 0; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<aside>
+  <div class="logo">
+    <span class="logo-tag">Developer Guide</span>
+    <h1>Vibe<span>Code</span></h1>
+  </div>
+
+  <nav>
+    <div class="nav-section-label">Getting Started</div>
+    <a href="index.html" class="active">
+      <span class="icon">🏠</span> Home
+    </a>
+    <a href="github-pages.html">
+      <span class="icon">🐙</span> GitHub &amp; Pages Setup
+    </a>
+
+    <!-- Add new guide links here, e.g.:
+    <div class="nav-section-label">Building</div>
+    <a href="first-webapp.html">
+      <span class="icon">⚡</span> Your First Web App
+    </a>
+    -->
+    <div class="nav-section-label">Reference</div>
+    <a href="useful-links.html">
+      <span class="icon">🔗</span> Useful Links
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    Add new guide pages and<br>link them in the nav above.
+  </div>
+</aside>
+
+<main>
+  <div class="home-content">
+    <p class="eyebrow">Workshop Guide</p>
+    <h2>Build your first <em>web app</em> with Claude</h2>
+    <p>
+      A step-by-step companion for getting your project live on the web.
+      Follow the guides in order — start with GitHub setup, then build and deploy.
+    </p>
+    <a href="github-pages.html" class="start-btn">
+      Start Here → GitHub Setup
+    </a>
+    <div class="cards">
+      <a href="github-pages.html" class="card">
+        <span class="card-icon">🐙</span>
+        <h3>GitHub &amp; Pages Setup</h3>
+        <p>Create your account, repo, and get your site live in minutes.</p>
+      </a>
+      <a href="useful-links.html" class="card">
+        <span class="card-icon">🔗</span>
+        <h3>Useful Links</h3>
+        <p>Quick access to GitHub, Claude, and other tools you'll use often.</p>
+      </a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
