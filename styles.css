@@ -20,6 +20,9 @@
   --step-2:     #a78bfa;
   --step-3:     #34d399;
   --step-4:     #fb923c;
+  --step-5:     #f472b6;
+  --step-6:     #facc15;
+  --step-7:     #38bdf8;
 }
 
 body {
@@ -192,7 +195,11 @@ code {
   padding: 2px 7px;
   font-size: 12px;
   font-family: var(--font-mono);
-  white-space: nowrap;
+  /* Long paths and error codes must be allowed to wrap. `nowrap` made them force the
+     whole page wider than the viewport on narrow screens. `anywhere` only breaks a
+     token that would otherwise overflow, so short inline codes still stay on one line. */
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 /* Button / UI labels — mimics the look of an on-screen button */
@@ -288,6 +295,9 @@ code {
 .s2 .section-num { background: rgba(167,139,250,0.15); color: var(--step-2); }
 .s3 .section-num { background: rgba(52,211,153,0.15);  color: var(--step-3); }
 .s4 .section-num { background: rgba(251,146,60,0.15);  color: var(--step-4); }
+.s5 .section-num { background: rgba(244,114,182,0.15); color: var(--step-5); }
+.s6 .section-num { background: rgba(250,204,21,0.15);  color: var(--step-6); }
+.s7 .section-num { background: rgba(56,189,248,0.15);  color: var(--step-7); }
 
 .section-title {
   font-family: var(--font-head);

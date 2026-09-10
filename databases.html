@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connecting to a Database — Vibe Code Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<aside>
+  <div class="logo">
+    <span class="logo-tag">Developer Guide</span>
+    <h1>Vibe<span>Code</span></h1>
+  </div>
+  <nav>
+    <div class="nav-section-label">Getting Started</div>
+    <a href="index.html">
+      <span class="icon">🏠</span> Home
+    </a>
+    <a href="github-setup.html">
+      <span class="icon">🐙</span> GitHub Setup
+    </a>
+    <a href="new-project.html">
+      <span class="icon">⚡</span> Starting a New Project
+    </a>
+    <div class="nav-section-label">Going Further</div>
+    <a href="databases.html" class="active">
+      <span class="icon">🗄️</span> Connecting to a Database
+    </a>
+    <div class="nav-section-label">Reference</div>
+    <a href="useful-links.html">
+      <span class="icon">🔗</span> Useful Links
+    </a>
+    <!-- Add new guide links here -->
+  </nav>
+  <div class="sidebar-footer">
+    Add new guide pages and<br>link them in the nav above.
+  </div>
+</aside>
+
+<main>
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Going Further</span>
+      <span>›</span>
+      <span>Connecting to a Database</span>
+    </div>
+    <h2>Connecting to a Database</h2>
+    <p>
+      Once an app needs to remember things for more than one person, it needs a real database.
+      This guide uses a worked example — a family birthday calendar — to explain what the database
+      is for, and then walks through every setting you have to configure, and why each one exists.
+      The database is the easy part. The configuration around it is where the time goes, because a
+      wrong setting usually fails silently or with a misleading error.
+    </p>
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-seg" id="p1"></div>
+    <div class="progress-seg" id="p2"></div>
+    <div class="progress-seg" id="p3"></div>
+    <div class="progress-seg" id="p4"></div>
+    <div class="progress-seg" id="p5"></div>
+    <div class="progress-seg" id="p6"></div>
+    <div class="progress-seg" id="p7"></div>
+  </div>
+
+  <!-- Section 1 -->
+  <div id="why-a-database" class="section s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Why the App Needs a Database <span>concept</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          <strong>Shared.</strong> Five people, five phones, one list of birthdays. Everyone has to
+          see the same thing, and an edit made on one device has to show up on the others
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          <strong>Durable.</strong> It has to survive a cleared browser, a new phone, a lost laptop.
+          Anything stored only in the browser is one wipe away from gone
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          <strong>Readable when nobody is there.</strong> A job runs at 7am to send birthday
+          reminders. No one is signed in. No browser is open. Something still has to read the list
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            That third one is the decisive requirement. Browser storage can just about fake the first
+            two — it cannot do the third at all. If your app only ever shows data to the person who
+            typed it in, you may not need a database yet. The moment something has to happen on a
+            schedule, or be seen by someone else, you do.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div id="why-firebase" class="section s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Why Firebase, and What We Set Up <span>~5 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          <a href="https://firebase.google.com" target="_blank" rel="noopener" class="ext-link">Firebase</a>
+          is Google's app platform. It gives you two things in one place:
+          <strong>Authentication</strong> (who are you?) and <strong>Firestore</strong> (the data itself)
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          There is no server to run or patch — the app talks to Firestore directly. It is free at
+          family scale, and it syncs live, so an edit on one phone appears on the others with no refresh
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          We use <strong>one Firebase project</strong> called <code>phil-mini-apps</code> on the free
+          Spark plan, shared by every mini app. The family signs in with the same email and password
+          everywhere, and each app keeps its own collections inside that one project
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            Sign-in method is email + password, restricted to an allowlist of family addresses.
+            A stranger can reach the login page, but their account is not on the list, so the
+            rules in step 4 refuse them.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div id="credentials" class="section s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">The Two Kinds of Credential <span>the crux</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          There are <strong>two different doors</strong> into the same database, and confusing them
+          is the single most common mistake. The browser comes in one way; the 7am job comes in
+          the other
+          <!-- Wrapper carries the size. An SVG with a viewBox reports 640px as its
+               intrinsic width, which inflates this shrink-to-fit layout on narrow
+               screens; sizing it from the wrapper keeps that out of the calculation. -->
+          <div style="width:100%;aspect-ratio:640/220;margin:16px 0 4px">
+          <svg viewBox="0 0 640 220" role="img" aria-label="Two doors into the database"
+               preserveAspectRatio="xMidYMid meet"
+               style="width:100%;height:100%;display:block;font-family:'Space Mono',monospace">
+            <rect x="4" y="18" width="176" height="52" rx="8"
+                  fill="rgba(0,229,255,0.10)" stroke="#00e5ff"/>
+            <text x="92" y="40" fill="#00e5ff" font-size="12" text-anchor="middle">Browser</text>
+            <text x="92" y="57" fill="#6b7280" font-size="10" text-anchor="middle">the family, signed in</text>
+
+            <rect x="4" y="150" width="176" height="52" rx="8"
+                  fill="rgba(251,146,60,0.10)" stroke="#fb923c"/>
+            <text x="92" y="172" fill="#fb923c" font-size="12" text-anchor="middle">7am job</text>
+            <text x="92" y="189" fill="#6b7280" font-size="10" text-anchor="middle">nobody signed in</text>
+
+            <rect x="330" y="70" width="150" height="80" rx="10"
+                  fill="#161922" stroke="#1e2330"/>
+            <text x="405" y="105" fill="#e8eaf0" font-size="13" text-anchor="middle">Firestore</text>
+            <text x="405" y="123" fill="#6b7280" font-size="10" text-anchor="middle">the database</text>
+
+            <line x1="180" y1="44" x2="326" y2="96" stroke="#00e5ff" stroke-width="1.5"/>
+            <line x1="180" y1="176" x2="326" y2="126" stroke="#fb923c" stroke-width="1.5"/>
+            <text x="252" y="62" fill="#00e5ff" font-size="9" text-anchor="middle">checked by RULES</text>
+            <text x="252" y="167" fill="#fb923c" font-size="9" text-anchor="middle">BYPASSES rules</text>
+
+            <circle cx="326" cy="96" r="3" fill="#00e5ff"/>
+            <circle cx="326" cy="126" r="3" fill="#fb923c"/>
+          </svg>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          <strong>The public one — the Firebase web config.</strong> Keys like
+          <code>VITE_FIREBASE_API_KEY</code> ship inside the page and anyone can read them out of
+          the source. That is fine and by design: they say <em>which project</em> to talk to.
+          They authorise nothing
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          <strong>The private one — the service account key.</strong> A key that reads and writes
+          anything and ignores every rule. It is how the 7am job gets in with nobody signed in,
+          and it must never leave the server
+          <div class="tip">
+            <span class="tip-icon">⚠️</span>
+            Security does not come from hiding the public config — it comes from the rules in step 4.
+            But the service account key is a genuine secret. A <code>VITE_</code> prefix means
+            "put this in the browser bundle", so if a secret ever gets that prefix, you have
+            published it. Treat that key like a password, and revoke it if it leaks.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div id="rules" class="section s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Publish the Security Rules <span>~5 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Go to
+          <a href="https://console.firebase.google.com" target="_blank" rel="noopener" class="ext-link">console.firebase.google.com</a>
+          → your project → <span class="ui-label">Firestore Database</span> → <span class="ui-label">Rules</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          The rules say who may read and write each collection. For the birthday app: the data
+          collections are readable <em>and</em> writable only if your signed-in email is on the
+          family list, and the two server-only collections are denied to everybody
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Add your app's blocks <strong>inside</strong> the existing
+          <code>match /databases/{database}/documents { … }</code> block, then click
+          <span class="ui-label">Publish</span>. It takes effect in seconds
+          <div class="tip">
+            <span class="tip-icon">⚠️</span>
+            <strong>Paste as a fragment — never replace the whole ruleset.</strong> One project
+            shared by several apps has <em>one</em> ruleset. Paste over the top and you silently
+            delete another app's rules. Firestore reports a missing rule as an ordinary
+            "permission denied", so the app you just broke looks like it has a bug in it.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div id="service-account" class="section s5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">Create the Service Account Key <span>~5 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          In the Firebase console: <span class="ui-label">Project settings</span> →
+          <span class="ui-label">Service accounts</span> →
+          <span class="ui-label">Generate new private key</span>. A <code>.json</code> file
+          downloads, and it is shown only once
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          Put it where the server can read it — for a Vercel app that is
+          <span class="ui-label">Settings</span> → <span class="ui-label">Environment Variables</span>.
+          Name it <code>FIREBASE_SERVICE_ACCOUNT</code> and paste the whole JSON as the value
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Redeploy. Environment variables are read when the app builds and runs, so an existing
+          deployment will not pick up a new one on its own
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            How it is actually used: the job signs a short-lived token with that private key, swaps
+            it with Google for an access token, and calls the database directly. No password, no
+            user, no rules. Until you set it, the job says so plainly —
+            <code>"FIREBASE_SERVICE_ACCOUNT is not set."</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6 -->
+  <div id="domains" class="section s6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">Authorised Domain + API Key Referrer <span>~5 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          <strong>A — Firebase.</strong> <span class="ui-label">Authentication</span> →
+          <span class="ui-label">Settings</span> → <span class="ui-label">Authorised domains</span>
+          → add your app's domain. Firebase only accepts a sign-in from a domain you have listed
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          <strong>B — Google Cloud.</strong>
+          <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" class="ext-link">console.cloud.google.com/apis/credentials</a>
+          → your browser API key → <span class="ui-label">Website restrictions</span> → add
+          <code>yourdomain.com/*</code>. This is what stops a stranger using the public key
+          they lifted from your page source
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          Both are required. They live in two different consoles, which is exactly why one gets forgotten
+          <div class="tip">
+            <span class="tip-icon">⚠️</span>
+            <strong>The failure to recognise:</strong> do A but not B and sign-in still fails — with
+            an error that never mentions domains at all,
+            <code>auth/requests-from-referer-…-are-blocked</code>. Meanwhile reading data keeps
+            working, so <em>only login</em> looks broken. That mismatch is the clue.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 7 -->
+  <div id="whatsapp" class="section s7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title">Bonus: Sending WhatsApp Messages <span>~10 min</span></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          Reading the database at 7am is only half of it — something has to deliver the reminder.
+          We use one small shared service, <code>notify-hub</code>, that owns the WhatsApp channel,
+          and every app borrows it rather than each wiring up its own
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            This is not just tidiness. Meta allows <strong>exactly one webhook URL per app</strong>,
+            so if replies are ever going to come back, something has to own that single URL and
+            route messages on to whichever app they belong to.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          <code>NOTIFY_SHARED_SECRET</code> — set on <strong>both</strong> sides to the same value.
+          The app proves it is allowed to send; the hub proves a reply really came from the hub.
+          Anything else gets a <code>401</code>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          <code>NOTIFY_ROUTE_BIRTHDAY</code> — set on the <strong>hub only</strong>. It tells the hub
+          where to forward a button tap. Miss it and taps are silently dropped as "unknown app"
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          The Meta credentials (<code>WHATSAPP_TOKEN</code>, <code>WHATSAPP_PHONE_NUMBER_ID</code>,
+          <code>WHATSAPP_APP_SECRET</code>) and the phone numbers all live on the hub
+          <div class="tip">
+            <span class="tip-icon">💡</span>
+            Phone numbers sit in one environment variable on the hub and nowhere else — not in the
+            app's code, and not in the database. Apps address people by a name like
+            <code>phil</code> and the hub resolves it. One place to change a number, and a leak of
+            the app's data never exposes anyone's mobile.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="success-banner">
+    <div class="success-icon">🗄️</div>
+    <div class="success-text">
+      <h3>Connected</h3>
+      <p>
+        The pattern worth remembering: <strong>public config identifies, rules authorise,</strong>
+        and the service account key is the one thing that must never leave the server. Each of the
+        four settings above fails in its own recognisable way — no rules means "permission denied",
+        no service account means the job says so by name, no authorised domain means sign-in is
+        refused, and no referrer means that odd "requests-from-referer" error.
+      </p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  const segs = ['p1','p2','p3','p4','p5','p6','p7'].map(id => document.getElementById(id));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = Array.from(sections).indexOf(e.target);
+        if (idx >= 0 && segs[idx]) segs[idx].classList.add('done');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
